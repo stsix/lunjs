@@ -12,7 +12,7 @@
 ---
 
 ### 2. 配置 GitHub Secrets
-进入仓库 **Settings → Secrets and variables → Actions → New repository secret**，依次添加以下 4 个 Secret：
+进入仓库 **Settings → Secrets and variables → Actions → New repository secret**，依次添加如以下Secret：
 
 | Secret 名称             | 值示例                        |
 |-------------------------|--------------------------------|
@@ -20,8 +20,9 @@
 | `TELEGRAM_BOT_TOKEN`    | `123456789:ABC-XYZ...`        |
 | `TELEGRAM_CHAT_ID`      | `123456789`                   |
 
-### USERNAME_AND_PASSWORD格式如下：
+#### USERNAME_AND_PASSWORD
 ```
+// 格式如下：
 {
   "your_account1@example.com": "your_password1",
   "your_account2@example.com": "your_password2"
