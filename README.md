@@ -1,4 +1,4 @@
-# Lunes 自动登录（GitHub Actions + Telegram 通知）
+# Lunes 自动保活（GitHub Actions + Telegram 通知）
 
 本项目通过 **GitHub Actions** 自动登录 [Lunes 控制台](https://ctrl.lunes.host/auth/login)，并将结果通过 **Telegram Bot** 通知。
 
@@ -16,8 +16,10 @@
 
 | Secret 名称             | 值示例                        |
 |-------------------------|--------------------------------|
-| `LUNES_USERNAME`        | `your-email@example.com`      |
-| `LUNES_PASSWORD`        | `yourPasswordHere`            |
+| `USERNAME_AND_PASSWORD`        | `{
+  "your_account1@example.com": "your_password1",
+  "your_account2@example.com": "your_password2"
+}`      |
 | `TELEGRAM_BOT_TOKEN`    | `123456789:ABC-XYZ...`        |
 | `TELEGRAM_CHAT_ID`      | `123456789`                   |
 
@@ -34,7 +36,7 @@
   打开仓库 → `Actions` → `Lunes Auto Login` → `Run workflow` → 点击绿色按钮运行。
 
 - **自动执行：**  
-  Workflow 默认每天运行一次，时间在 `login.yml` 中配置（UTC 时区）。
+  Workflow 默认每14天运行一次，时间在 `login.yml` 中配置（UTC 时区）。
 
 ---
 
