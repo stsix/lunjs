@@ -1,4 +1,4 @@
-name: Lunes Push(Sweet-Node6-US)
+name: Lunes Action(Sweet-Node6-US)
 
 on:
   workflow_dispatch:
