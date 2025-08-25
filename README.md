@@ -1,4 +1,4 @@
-# Lunes 自动保活（GitHub Actions + Telegram 通知）
+# Lunes 多账户保机（GitHub Actions + Telegram 通知）
 
 本项目通过 **GitHub Actions** 自动登录 [Lunes 控制台](https://ctrl.lunes.host/auth/login)，并将结果通过 **Telegram Bot** 通知。
 
@@ -20,6 +20,13 @@
 | `TELEGRAM_BOT_TOKEN`    | `123456789:ABC-XYZ...`        |
 | `TELEGRAM_CHAT_ID`      | `123456789`                   |
 
+### USERNAME_AND_PASSWORD格式如下：
+```
+{
+  "your_account1@example.com": "your_password1",
+  "your_account2@example.com": "your_password2"
+}
+```
 > **获取 Telegram 参数方法：**  
 > - `TELEGRAM_BOT_TOKEN`：在 Telegram 搜索 @BotFather，创建 Bot 获取 Token。  
 > - `TELEGRAM_CHAT_ID`：在 Telegram 搜索 @userinfobot，获取你的 Chat ID。
