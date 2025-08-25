@@ -16,10 +16,7 @@
 
 | Secret 名称             | 值示例                        |
 |-------------------------|--------------------------------|
-| `USERNAME_AND_PASSWORD`        | `{
-  "your_account1@example.com": "your_password1",
-  "your_account2@example.com": "your_password2"
-}`      |
+| `USERNAME_AND_PASSWORD`        | `{"your_account1@example.com": "your_password1","your_account2@example.com": "your_password2"}`      |
 | `TELEGRAM_BOT_TOKEN`    | `123456789:ABC-XYZ...`        |
 | `TELEGRAM_CHAT_ID`      | `123456789`                   |
 
