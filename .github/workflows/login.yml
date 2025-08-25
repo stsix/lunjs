@@ -1,20 +1,19 @@
-name: Lunes Auto Login(Sweet-Node6-US)
+name: Lunes Push(Sweet-Node6-US)
 
 on:
   workflow_dispatch:
   schedule:
-    # 每天北京/河内/曼谷时区（UTC+7）03:00 执行一次（按需调整）
-    - cron: "0 20 * * *"  # GitHub 使用 UTC，这里是 UTC 20:00 ≈ 亚洲/曼谷 03:00
+    # 每隔14天运行一次（UTC时间）
+    - cron: "0 0 */14 * *"
 
 jobs:
   login:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
 
     env:
       # 从 GitHub Secrets 注入
-      LUNES_USERNAME: ${{ secrets.LUNES_USERNAME }}
-      LUNES_PASSWORD: ${{ secrets.LUNES_PASSWORD }}
+      USERNAME_AND_PASSWORD: ${{ secrets.USERNAME_AND_PASSWORD }}
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
