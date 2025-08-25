@@ -28,7 +28,7 @@ jobs:
 
       - name: Install deps
         run: |
-          npm ci || npm i
+          npm install
           npx playwright install --with-deps chromium
 
       - name: Run login
