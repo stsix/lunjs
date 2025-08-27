@@ -58,6 +58,11 @@
 - 如果站点出现 **人机验证（Verify you are human）**，脚本会停止并通知。
 - 如需修改运行频率，编辑 `.github/workflows/login.yml` 的 `cron` 表达式。
 
+## 鸣谢
+本项目基于
+https://github.com/gansweet/BetaDash-lunes-host-autoLogin-Sweet-
+二次修改
+
 ---
 
 ## ✅ 完成
