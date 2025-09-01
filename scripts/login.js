@@ -165,17 +165,45 @@ async function loginWithAccount(username, password, index) {
     await page.screenshot({ path: spBefore, fullPage: true });
 
     console.log(`[${username}] 提交登录...`);
+    
+    // 使用Promise.all同时等待导航和点击操作
     await Promise.all([
-      page.waitForLoadState('networkidle', { timeout: 30_000 }).catch(() => {}),
+      // 等待导航完成或超时
+      page.waitForNavigation({ 
+        waitUntil: 'networkidle', 
+        timeout: 45_000  // 增加导航等待时间
+      }).catch(e => {
+        console.log(`[${username}] 导航等待超时或失败: ${e.message}`);
+        // 这里不抛出异常，我们会通过其他方式检查登录状态
+      }),
       loginBtn.click({ timeout: 10_000 })
     ]);
 
-    // 4) 判定是否登录成功
+    // 4) 增加额外等待时间，确保页面完全加载
+    console.log(`[${username}] 等待页面稳定...`);
+    await page.waitForTimeout(5000);  // 额外等待5秒
+    
+    // 5) 判定是否登录成功
     const spAfter = screenshot('03-after-submit');
     await page.screenshot({ path: spAfter, fullPage: true });
 
     const url = page.url();
-    const successHint = await page.locator('text=/Dashboard|Logout|Sign out|控制台|面板/i').first().count();
+    console.log(`[${username}] 当前URL: ${url}`);
+    
+    // 多种方式检测登录成功
+    let successHint = 0;
+    const successSelectors = [
+      'text=/Dashboard|控制台|面板/i',
+      'text=/Logout|Sign out|退出|登出/i',
+      'text=/Welcome|欢迎/i'
+    ];
+    
+    for (const selector of successSelectors) {
+      const element = await page.locator(selector).first();
+      successHint += await element.count();
+      if (successHint > 0) break;
+    }
+    
     const stillOnLogin = /\/auth\/login/i.test(url);
 
     if (!stillOnLogin || successHint > 0) {
@@ -191,9 +219,22 @@ async function loginWithAccount(username, password, index) {
     }
 
     // 若还在登录页，进一步检测错误提示
-    const errorMsgNode = page.locator('text=/Invalid|incorrect|错误|失败|无效/i');
-    const hasError = await errorMsgNode.count();
-    const errorMsg = hasError ? await errorMsgNode.first().innerText().catch(() => '') : '';
+    const errorSelectors = [
+      'text=/Invalid|incorrect|错误|失败|无效/i',
+      '.error-message',
+      '.alert-error',
+      '[class*="error"]',
+      '[class*="alert"]'
+    ];
+    
+    let errorMsg = '';
+    for (const selector of errorSelectors) {
+      const errorElement = page.locator(selector);
+      if (await errorElement.count() > 0) {
+        errorMsg = await errorElement.first().innerText().catch(() => '');
+        if (errorMsg) break;
+      }
+    }
 
     console.log(`[${username}] ❌ 登录失败: ${errorMsg || '未知错误'}`);
     await notifyTelegram({
@@ -254,7 +295,7 @@ async function main() {
       
       // 在账户之间添加短暂延迟，避免请求过于频繁
       if (i < accountEntries.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        await new Promise(resolve => setTimeout(resolve, 5000)); // 增加到5秒延迟
       }
     }
 
